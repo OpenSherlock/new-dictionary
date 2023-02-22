@@ -1,0 +1,40 @@
+<?xml version="1.0" ?>
+<!-- 
+	tqos-asr-dictionary server properties
+-->
+
+<properties>
+	<!-- dictionary postgres -->
+	<parameter name="DatabaseName" value = "testdictionary" />
+	<parameter name="DatabaseSchema" value = "tqos_dictionary" />
+	<parameter name="ClientCacheSize" value = "8192" />
+
+
+
+	<parameter name="ServerURL" value="localhost" />  <!--  ??? CHANGEME -->
+	<parameter name="ServerPort" value="7878" /> <!-- ??? CHANGEME -->
+
+	<!-- used in Stopper and StopperListener -->
+	<parameter name="StopperPort" value="8999" /> <!-- ??? CHANGEME -->
+
+	<parameter name="WordMapDictionaryPath" value="data/worddictionary" />
+	<parameter name="WordMapDictionaryName" value="words" />
+	<parameter name="IdMapDictionaryPath" value="data/iddictionary" />
+	<parameter name="IdMapDictionaryName" value="identies" />
+	
+	<!-- where the dictionary is be stored;
+		this file should not be shared with other agents 
+	<parameter name="WordDictionaryPath" value="data/dictionary.json" />-->
+
+	<!-- many different clients can use the same code,
+		typically a gigantic UJID -->
+	<parameter name="ClientId" value="changeme" />
+	
+	<!-- this server commmunicates with the Statistics Server -->
+	<parameter name="StatServerURl" value="localhost" /> <!--  coordinate with StatServer -->
+	<parameter name="StatServerPort" value="6900" /> <!-- coordinate with StatServer -->
+	<parameter name="StatServerClientId" value = "changeme" /> <!-- coordinate with StatServer -->
+
+
+</properties>
+
