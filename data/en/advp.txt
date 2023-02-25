@@ -1,0 +1,4 @@
+has frequently been
+has occasionally been
+is frequently
+is occasionally

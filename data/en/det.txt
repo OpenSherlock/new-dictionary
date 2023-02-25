@@ -1,0 +1,8 @@
+#determiners
+Some
+Many
+All
+Each
+One
+The
+Which

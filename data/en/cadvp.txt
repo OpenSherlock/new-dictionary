@@ -1,0 +1,25 @@
+#see http://www.chompchomp.com/terms/conjunctiveadverb.htm
+accordingly
+also
+besides
+consequently
+conversely
+finally
+furthermore
+hence
+however
+indeed
+instead
+likewise
+meanwhile
+moreover
+nevertheless
+next
+nonetheless
+otherwise
+similarly
+still
+subsequently
+then
+therefore
+thus
