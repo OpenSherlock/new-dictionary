@@ -42,14 +42,14 @@
     <build>
         <plugins>
         <!-- required for jdk > 1.8 -->
-       <plugin>
-       		<groupId>org.apache.maven.plugins</groupId>
-       		<artifactId>maven-compiler-plugin</artifactId>
-       		<configuration>
-           		<source>1.6</source>
-           		<target>1.6</target>
-       		</configuration>
-		</plugin>
+	       <plugin>
+	       		<groupId>org.apache.maven.plugins</groupId>
+	       		<artifactId>maven-compiler-plugin</artifactId>
+	       		<configuration>
+	           		<source>1.6</source>
+	           		<target>1.6</target>
+	       		</configuration>
+			</plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -134,7 +134,7 @@
 				<configuration>
 		  		<archive>
 		    		<manifest>
-		      		<mainClass>org.topicquests.asr.gramolizer.GramolizerEnvironment</mainClass>
+		      		<mainClass>org.topicquests.asr.dictionary.Main</mainClass>
 		    		</manifest>
 		  		</archive>
 		  		<descriptorRefs>
