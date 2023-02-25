@@ -1,0 +1,5 @@
+// create database as named in config-props.xml
+create database newdictionary owner tq_admin;
+//requires tq_admin with a password as defined in postgress-props.xml installed on db
+//to install
+psql newdictionary -f dictionary.sql  

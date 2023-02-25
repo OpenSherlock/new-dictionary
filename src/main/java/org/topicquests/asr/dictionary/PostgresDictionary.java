@@ -63,42 +63,27 @@ public class PostgresDictionary implements IPostgresDictionary {
 
 	@Override
 	public long addTermWord(String word) {
-		String sql = "INSERT INTO public.dictionary (id, word, lc_word) VALUES(?, ?, ?)";
+		String sql = "INSERT INTO public.dictionary (word, lc_word) VALUES(?, ?) RETURNING id";
 		IResult r = null;
+		long result = -1;
 	    try {
 	      r = conn.beginTransaction();
-	      conn.setProxyRole(r);
-	      Object [] obj = new Object[3];
-	      obj[0] = latestId;
-	      obj[1] = word;
-	      obj[2] = word.toLowerCase();
-	      conn.executeSQL(sql, r, obj);
+	      Object [] obj = new Object[2];
+	      obj[0] = word;
+	      obj[1] = word.toLowerCase();
+	      r = conn.executeSelect(sql, r, obj);
+	      ResultSet rs = (ResultSet)r.getResultObject();
+	      if (rs != null && rs.next())
+			result = rs.getLong("id");
+	      
 	    } catch (Exception e) {
 	    	environment.logError(e.getMessage(), e);
 	    } finally {
 	    	conn.endTransaction(r);
 	    }
-	    updateLatestId();
-	    return this.getTermId(word);
-	}
-
-	void updateLatestId() {
-		String sql = "UPDATE public.latest SET latest = ? WHERE latest = ?";
-		IResult r = null;
-	    try {
-	      r = conn.beginTransaction();
-	      conn.setProxyRole(r);
-	      Object [] obj = new Object[2];
-	      obj[0] = latestId+1;
-	      obj[1] = latestId++;
-	      conn.executeSQL(sql, r, obj);
-	    } catch (Exception e) {
-	    	environment.logError(e.getMessage(), e);
-	    } finally {
-	    	conn.endTransaction(r);
-	    }		
-	}
-	
+	    environment.logDebug("PGD "+word+" "+result+" | "+r.getErrorString());
+	    return result;
+	}	
 
 	
 	@Override
@@ -108,7 +93,6 @@ public class PostgresDictionary implements IPostgresDictionary {
 		IResult r = null;
 	    try {
 	      r = conn.beginTransaction();
-	      conn.setProxyRole(r);
 	      Object [] obj = new Object[1];
 	      obj[0] = id;
 	      conn.executeSelect(sql, r, obj);
@@ -131,7 +115,6 @@ public class PostgresDictionary implements IPostgresDictionary {
 		IResult r = null;
 	    try {
 	      r = conn.beginTransaction();
-	      conn.setProxyRole(r);
 	      Object [] obj = new Object[2];
 	      obj[0] = count;
 	      obj[1] = offset;
@@ -157,7 +140,6 @@ public class PostgresDictionary implements IPostgresDictionary {
 		IResult r = null;
 	    try {
 	      r = conn.beginTransaction();
-	      conn.setProxyRole(r);
 	      Object [] obj = new Object[1];
 	      obj[0] = word.toLowerCase();
 	      conn.executeSelect(sql, r, obj);
