@@ -74,17 +74,18 @@ public class DictionaryPostgresModel implements IDictionaryServerModel {
 		}
 		environment.logDebug("DictionaryServerModel.handleNewRequest+ "+jo);
 		result.setResultObject(jo);
-		environment.logDebug("DictionaryServerModel.handleNewRequest++ "+result.getResultObject());;
+		//environment.logDebug("DictionaryServerModel.handleNewRequest++ "+result.getResultObject());;
 
 		return result;
-		
 	}
 	
 	String getDictionary() {
 		String result = null;
 		JSONObject jo = dictionary.getDictionary();
-		if (jo != null)
+		if (jo != null) {
 			result = jo.toJSONString();
+			//result=result.replaceAll("\\\\", ""); // get rid of \" in values
+		}
 		return result;
 	}
 	

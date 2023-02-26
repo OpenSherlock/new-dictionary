@@ -100,9 +100,9 @@ public class PostgresDictionary implements IPostgresDictionary {
 	    	  String foo;
 	    	  String id;
 	    	  while (rs.next()) {
-	    		  // key: word|lcword
+	    		  // key: word:lcword
 	    		  id = rs.getString("id");
-	    		  foo = rs.getString("word")+"|";
+	    		  foo = rs.getString("word")+":";
 	    		  foo += rs.getString("lc_word");
 	    		  result.put(id, foo);
 	    	  }

@@ -76,7 +76,7 @@ public class DictionaryServletHandler extends HttpServlet {
 		IResult r = model.handleRequest(x);
 		JSONObject jo = (JSONObject)r.getResultObject();
 		//Two cases:
-		environment.logDebug("DictServer.executeGet "+jo);
+		//environment.logDebug("DictServer.executeGet "+jo);
 		if (jo == null) {
 			JSONObject msg = new JSONObject();
 			if (r.hasError()) {
