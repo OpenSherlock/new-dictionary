@@ -52,7 +52,7 @@ public class DictionaryPostgresModel implements IDictionaryServerModel {
 		environment.logDebug("DictionaryServerModel.handleNewRequest- "+request);
 		String verb = request.getAsString(IDictionaryServerModel.VERB);
 		String clientIx = request.getAsString(IDictionaryServerModel.CLIENT_ID);
-		String x;
+		String x = null;
 		if (clientIx.equals(clientId)) {
 			if (verb.equals(IDictionaryServerModel.GET_TERM_ID) ||
 				verb.equals(IDictionaryServerModel.ADD_TERM)) {
@@ -62,7 +62,8 @@ public class DictionaryPostgresModel implements IDictionaryServerModel {
 				x = getTermById(request);
 				jo.put(IDictionaryServerModel.CARGO, x);
 			} else if (verb.equals(IDictionaryServerModel.GET_DICTIONARY)) {
-				//WE DON'T DO THIS
+				x = getDictionary();
+				jo.put(IDictionaryServerModel.CARGO, x);
 			} else if (verb.equals(IDictionaryServerModel.TEST))  {
 				jo.put(IDictionaryServerModel.CARGO, "Yup");
 			} else {
@@ -77,6 +78,14 @@ public class DictionaryPostgresModel implements IDictionaryServerModel {
 
 		return result;
 		
+	}
+	
+	String getDictionary() {
+		String result = null;
+		JSONObject jo = dictionary.getDictionary();
+		if (jo != null)
+			result = jo.toJSONString();
+		return result;
 	}
 	
 	String getTermById(JSONObject jo) {

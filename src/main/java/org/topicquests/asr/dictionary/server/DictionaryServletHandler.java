@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -111,19 +112,22 @@ public class DictionaryServletHandler extends HttpServlet {
 	JSONObject processRequest(HttpServletRequest request) throws ServletException {
 		JSONObject result = null;
 		String pt = getPath(request);
+		environment.logDebug("PROCESSREQUEST "+pt);
+		//PROCESSREQUEST http://localhost:7878/{"verb":"getDictionary","clientId":"changeme"}
 		if (!pt.startsWith("{")) {
-			int where = pt.indexOf('/');
+			int where = pt.lastIndexOf('/');
 			if (where > -1)  {
 				pt = pt.substring(where+1);
 			}
 		}
+		environment.logDebug("PROCESSREQUEST+ "+pt);
 		result = jsonFromString(pt);
 		
 		return result;
 	}
 	
 	JSONObject jsonFromString(String jsonString) throws ServletException {
-		//environment.logDebug("JSONFROMSTRING "+jsonString);
+		environment.logDebug("JSONFROMSTRING "+jsonString);
 		//NOTE: there are edge conditions:
 		//  jsonString == ""  can happen
 		JSONParser p = new JSONParser(JSONParser.MODE_JSON_SIMPLE);
@@ -150,8 +154,9 @@ public class DictionaryServletHandler extends HttpServlet {
     			int c;
     			while ((c = ins.read()) > -1)
     				buf.append((char)c);
-        		System.out.println(buf.toString());
-    			
+        		System.out.println("FOO "+buf.toString());
+    			//http://localhost:7878/%7B%22verb%22%3A%22getDictionary%22%2C%22clientId%22%3A%22changeme%22%7D
+        		path = buf.toString();
     		}
     	} catch (Exception x) {
     		environment.logError("DictionaryServletHandler.getPath booboo "+x.getMessage(), x);

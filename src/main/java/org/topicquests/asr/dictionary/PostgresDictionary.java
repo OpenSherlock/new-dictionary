@@ -12,6 +12,8 @@ import org.topicquests.pg.api.IPostgresConnection;
 import org.topicquests.support.ResultPojo;
 import org.topicquests.support.api.IResult;
 
+import net.minidev.json.JSONObject;
+
 /**
  * @author jackpark
  *
@@ -85,6 +87,33 @@ public class PostgresDictionary implements IPostgresDictionary {
 	    return result;
 	}	
 
+	@Override
+	public JSONObject getDictionary() {
+		JSONObject result = new JSONObject();
+		String sql = "SELECT * FROM public.dictionary";
+		IResult r = null;
+	    try {
+	      r = conn.beginTransaction();
+	      conn.executeSelect(sql, r);
+	      ResultSet rs = (ResultSet)r.getResultObject();
+	      if (rs != null) {
+	    	  String foo;
+	    	  String id;
+	    	  while (rs.next()) {
+	    		  // key: word|lcword
+	    		  id = rs.getString("id");
+	    		  foo = rs.getString("word")+"|";
+	    		  foo += rs.getString("lc_word");
+	    		  result.put(id, foo);
+	    	  }
+	      }
+	    } catch (Exception e) {
+	    	environment.logError(e.getMessage(), e);
+	    } finally {
+	    	conn.endTransaction(r);
+	    }		
+	    return result;
+	}
 	
 	@Override
 	public String getTermById(long id) {
