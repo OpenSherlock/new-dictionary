@@ -114,12 +114,26 @@ public class DictionaryServletHandler extends HttpServlet {
 		String pt = getPath(request);
 		environment.logDebug("PROCESSREQUEST "+pt);
 		//PROCESSREQUEST http://localhost:7878/{"verb":"getDictionary","clientId":"changeme"}
+		// edge case {"verb":"addWord","word":""","clientId":"changeme"}
+		int where;
 		if (!pt.startsWith("{")) {
-			int where = pt.lastIndexOf('/');
+			where = pt.lastIndexOf('/');
 			if (where > -1)  {
 				pt = pt.substring(where+1);
 			}
 		}
+		where = pt.indexOf("\"\"\"");
+		environment.logDebug("ProcessingRequest-1 "+where);
+		if (where > -1) {
+			StringBuilder buf = new StringBuilder();
+			buf.append(pt.substring(0, where));
+			buf.append("\"\\\"\"");
+			buf.append(pt.substring(where+3));
+			pt = buf.toString();
+			environment.logDebug("ProcessingRequest-2 "+where);
+
+		}
+
 		environment.logDebug("PROCESSREQUEST+ "+pt);
 		result = jsonFromString(pt);
 		
