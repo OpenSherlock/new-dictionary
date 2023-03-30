@@ -1,5 +1,7 @@
-/**
- * 
+/*
+ * Copyright 2023 TopicQuests Foundation
+ *  This source code is available under the terms of the Affero General Public License v3.
+ *  Please see LICENSE.txt for full license terms, including the availability of proprietary exceptions.
  */
 package org.topicquests.asr.dictionary;
 
@@ -66,6 +68,7 @@ public class PostgresDictionary implements IPostgresDictionary {
 	@Override
 	public long addTermWord(String word) {
 		String sql = "INSERT INTO public.dictionary (word, lc_word) VALUES(?, ?) RETURNING id";
+		environment.logDebug("AddTerm: "+word);
 		IResult r = null;
 		long result = -1;
 	    try {
