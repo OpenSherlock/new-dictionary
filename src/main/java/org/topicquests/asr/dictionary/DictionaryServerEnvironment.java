@@ -25,10 +25,10 @@ public class DictionaryServerEnvironment extends RootEnvironment {
 
 	private IStatisticsClient stats;
 	/**
-	 * 
+	 *
 	 */
 	public DictionaryServerEnvironment() {
-		super("config-props.xml", "logger.properties");
+		super("config-props.xml");
 		stats = new StatisticsHttpClient(this);
 		String schemaName = getStringProperty("DatabaseSchema");
 		database = new PostgresConnectionFactory(getStringProperty("DatabaseName"),
@@ -37,9 +37,9 @@ public class DictionaryServerEnvironment extends RootEnvironment {
 		pgDictionary = new PostgresDictionary(this);
 		pgModel = new DictionaryPostgresModel(this, pgDictionary);
        // System.out.println("ENV-1 "+model);
-		
+
 		Runtime.getRuntime().addShutdownHook(new Thread() {
-			
+
 			@Override
 			public void run() {
 				shutDown();
@@ -47,31 +47,31 @@ public class DictionaryServerEnvironment extends RootEnvironment {
 		});
 
 	}
-	
+
 	public IDictionaryServerModel getPostgresModel() {
 		return pgModel;
 	}
 	public IPostgresDictionary getPostgresDictionary() {
 		return pgDictionary;
 	}
-	
+
 	public PostgresConnectionFactory getPostgresFactory() {
 		return database;
 	}
-	
+
 	/*public IPersistentDictionary getDictionary() {
 		return dictionary;
 	}*/
-	
+
 	public IStatisticsClient getStats() {
 		return stats;
 	}
-	
+
 	/*public IDictionaryServerModel getModel() {
 		logDebug("GetModel");
 		return model;
 	}*/
-		
+
 	public void shutDown() {
 		logDebug("DictionaryServerEnvironment.shutDown "+isShutDown);
 		if (!isShutDown) {

@@ -23,9 +23,9 @@
         <github.global.server>github</github.global.server>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
-    	<vertx.version>3.5.1</vertx.version>
-    	<vertx-maven-plugin.version>1.0.13</vertx-maven-plugin.version>
-    
+        <vertx.version>3.5.1</vertx.version>
+        <vertx-maven-plugin.version>1.0.13</vertx-maven-plugin.version>
+
     </properties>
     <repositories>
         <repository>
@@ -42,14 +42,14 @@
     <build>
         <plugins>
         <!-- required for jdk > 1.8 -->
-	       <plugin>
-	       		<groupId>org.apache.maven.plugins</groupId>
-	       		<artifactId>maven-compiler-plugin</artifactId>
-	       		<configuration>
-	           		<source>1.6</source>
-	           		<target>1.6</target>
-	       		</configuration>
-			</plugin>
+           <plugin>
+                   <groupId>org.apache.maven.plugins</groupId>
+                   <artifactId>maven-compiler-plugin</artifactId>
+                   <configuration>
+                       <source>1.6</source>
+                       <target>1.6</target>
+                   </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -128,63 +128,63 @@
                     </archive>
                 </configuration>
             </plugin>
- 
-	        <plugin>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<configuration>
-		  		<archive>
-		    		<manifest>
-		      		<mainClass>org.topicquests.asr.dictionary.Main</mainClass>
-		    		</manifest>
-		  		</archive>
-		  		<descriptorRefs>
-		    		<descriptorRef>jar-with-dependencies</descriptorRef>
-		  		</descriptorRefs>
-				</configuration>
-				<executions>
-		  		<execution>
-		    	<id>make-assembly</id> 
-		    	<phase>package</phase> 
-		    	<goals>
-		      	<goal>single</goal>
-		    	</goals>
-		  		</execution>
-				</executions>
-	      </plugin>
 
-     	</plugins>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                  <archive>
+                    <manifest>
+                      <mainClass>org.topicquests.asr.dictionary.Main</mainClass>
+                    </manifest>
+                  </archive>
+                  <descriptorRefs>
+                    <descriptorRef>jar-with-dependencies</descriptorRef>
+                  </descriptorRefs>
+                </configuration>
+                <executions>
+                  <execution>
+                <id>make-assembly</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>single</goal>
+                </goals>
+                  </execution>
+                </executions>
+          </plugin>
+
+         </plugins>
     </build>
     <dependencies>
-   		<dependency>
-   			<groupId>org.eclipse.jetty</groupId>
-   			<artifactId>jetty-servlet</artifactId>
-   			<version>9.4.6.v20170531</version>
-   		</dependency>
-   		<dependency>
-   			<groupId>org.eclipse.jetty</groupId>
-   			<artifactId>jetty-servlets</artifactId>
-   			<version>9.4.6.v20170531</version>
-   		</dependency>
-   		<dependency>
-   			<groupId>org.topicquests</groupId>
-   			<artifactId>tq-support</artifactId>
-   			<version>1.8.0-SNAPSHOT</version>
-   		</dependency>
-   		<dependency>
-   			<groupId>org.topicquests</groupId>
-   			<artifactId>tqos-asr-common</artifactId>
-   			<version>0.4.0-SNAPSHOT</version>
-   		</dependency>
-   		<dependency>
-   			<groupId>org.topicquests</groupId>
-   			<artifactId>tqos-asr-statistics-client</artifactId>
-   			<version>0.1.0-SNAPSHOT</version>
-   		</dependency>
-   		<dependency>
-   			<groupId>org.topicquests</groupId>
-   			<artifactId>tqks-postgresql-provider</artifactId>
-   			<version>0.10.0-SNAPSHOT</version>
-   		</dependency>
+           <dependency>
+               <groupId>org.eclipse.jetty</groupId>
+               <artifactId>jetty-servlet</artifactId>
+               <version>9.4.6.v20170531</version>
+           </dependency>
+           <dependency>
+               <groupId>org.eclipse.jetty</groupId>
+               <artifactId>jetty-servlets</artifactId>
+               <version>9.4.6.v20170531</version>
+           </dependency>
+           <dependency>
+               <groupId>org.topicquests</groupId>
+               <artifactId>tq-support</artifactId>
+               <version>2.0.0-SNAPSHOT</version>
+           </dependency>
+           <dependency>
+               <groupId>org.topicquests</groupId>
+               <artifactId>tqos-asr-common</artifactId>
+               <version>0.4.0-SNAPSHOT</version>
+           </dependency>
+           <dependency>
+               <groupId>org.topicquests</groupId>
+               <artifactId>tqos-asr-statistics-client</artifactId>
+               <version>0.1.0-SNAPSHOT</version>
+           </dependency>
+           <dependency>
+               <groupId>org.topicquests</groupId>
+               <artifactId>tqks-postgresql-provider</artifactId>
+               <version>1.0.0-SNAPSHOT</version>
+           </dependency>
     </dependencies>
     <reporting>
         <plugins>
