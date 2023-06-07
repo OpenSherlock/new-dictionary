@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.topicquests</groupId>
     <artifactId>new-dictionary-server</artifactId>
-    <version>0.6.0-SNAPSHOT</version>
+    <version>0.6.0</version>
     <name>new-dictionary-server</name>
     <developers>
         <developer>
@@ -168,22 +168,22 @@
            <dependency>
                <groupId>org.topicquests</groupId>
                <artifactId>tq-support</artifactId>
-               <version>2.0.0-SNAPSHOT</version>
+               <version>2.0.0</version>
            </dependency>
            <dependency>
                <groupId>org.topicquests</groupId>
                <artifactId>tqos-asr-common</artifactId>
-               <version>0.5.0-SNAPSHOT</version>
+               <version>0.5.0</version>
            </dependency>
            <dependency>
                <groupId>org.topicquests</groupId>
                <artifactId>tqos-asr-statistics-client</artifactId>
-               <version>0.3.0-SNAPSHOT</version>
+               <version>0.3.0</version>
            </dependency>
            <dependency>
                <groupId>org.topicquests</groupId>
                <artifactId>tqks-postgresql-provider</artifactId>
-               <version>1.0.0-SNAPSHOT</version>
+               <version>1.0.0</version>
            </dependency>
     </dependencies>
     <reporting>
