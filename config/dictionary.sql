@@ -21,4 +21,9 @@ CREATE INDEX IF NOT EXISTS idx_id ON public.dictionary (id);
 CREATE INDEX IF NOT EXISTS idx_wd ON public.dictionary (word);
 CREATE INDEX IF NOT EXISTS idx_lcwd ON public.dictionary (lc_word);
 
+CREATE TABLE IF NOT EXISTS public.synonyms (
+	id 		BIGINT PRIMARY KEY NOT NULL REFERENCES  public.dictionary (id),
+	syn_id	BIGINT NOT NULL REFERENCES  public.dictionary (id)
+);
 
+CREATE INDEX IF NOT EXISTS synidx_id ON public.synonyms (id,syn_id);
