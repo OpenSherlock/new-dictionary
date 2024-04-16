@@ -195,4 +195,86 @@ public class PostgresDictionary implements IPostgresDictionary {
 		}
 	}
 
+	@Override
+	public void addSynonym(long masterId, long synonymId) {
+		String sql = "INSERT INTO public.synonyms (id, syn_id) VALUES(?, ?)";
+		environment.logDebug("AddSyn: "+masterId+" "+synonymId);
+		IResult r = null;
+		long result = -1;
+	    try {
+	      r = conn.beginTransaction();
+	      Object [] obj = new Object[2];
+	      obj[0] = Long.valueOf(masterId);
+	      obj[1] = Long.valueOf(synonymId);
+	      r = conn.executeSelect(sql, r, obj);
+	      
+	    } catch (Exception e) {
+	    	environment.logError(e.getMessage(), e);
+	    } finally {
+	    	conn.endTransaction(r);
+	    }
+	}
+
+	@Override
+	public List<Long> listSynonymIds(long masterId) {
+		List<Long> result = new ArrayList<Long>();
+		String sql = "SELECT word FROM public.dictionary LIMIT ? OFFSET ?";
+		IResult r = null;
+	    try {
+	      r = conn.beginTransaction();
+	      Object [] obj = new Object[1];
+	      obj[0] = Long.valueOf(masterId);
+	      conn.executeSelect(sql, r, obj);
+	      ResultSet rs = (ResultSet)r.getResultObject();
+	      if (rs != null) {
+	    	  while(rs.next()) {
+	    		  result.add(Long.valueOf(rs.getLong("syn_id")));
+	    	  }
+	      }
+	    } catch (Exception e) {
+	    	environment.logError(e.getMessage(), e);
+	    } finally {
+	    	conn.endTransaction(r);
+	    }
+	    return result;
+	}
+
+	@Override
+	public List<String> listSynonyms(long masterId) {
+		List<String> result = new ArrayList<String>();
+		String sql = "SELECT syn_id FROM public.synonyms where id= ?";
+		IResult r = null;
+	    try {
+	      r = conn.beginTransaction();
+	      Object [] obj = new Object[1];
+	      obj[0] = Long.valueOf(masterId);
+	      conn.executeSelect(sql, r, obj);
+	      ResultSet rs = (ResultSet)r.getResultObject();
+	      if (rs != null) {
+	  		List<Long> rxx = new ArrayList<Long>();
+
+	    	  while(rs.next()) {
+	    		  rxx.add(Long.valueOf(rs.getLong("syn_id")));
+	    	  }
+	    	  if (!rxx.isEmpty()) {
+	    		  sql= "SELECT word FROM public.dictionary WHERE id="; 
+	    		  Iterator<Long> litr = rxx.iterator();
+	    		  while (litr.hasNext()) {
+	    			  obj[0] = Long.valueOf(litr.next());
+	    			  conn.executeSelect(sql, r, obj);
+	    			  rs = (ResultSet)r.getResultObject();
+	    			  if (rs != null) {
+	    				  result.add(rs.getString("word"));
+	    			  }
+	    		  }
+	    	  }
+	      }
+	    } catch (Exception e) {
+	    	environment.logError(e.getMessage(), e);
+	    } finally {
+	    	conn.endTransaction(r);
+	    }
+	    return result;
+	}
+
 }

@@ -12,6 +12,9 @@ import net.minidev.json.JSONObject;
  */
 public interface IPostgresDictionary {
 
+	////////////////////
+	// Dictionary
+	////////////////////
 	long addTermWord(String word);
 	
 	/**
@@ -33,6 +36,17 @@ public interface IPostgresDictionary {
 	
 	boolean isEmpty();
 	List<String> listWords(int offset, int count);
+
+	////////////////////
+	// Synonyms
+	////////////////////
+	
+	
+	void addSynonym(long masterId, long synonymId);
+	
+	List<Long> listSynonymIds(long masterId);
+	
+	List<String> listSynonyms(long masterId);
 
 	void shutDown();
 
