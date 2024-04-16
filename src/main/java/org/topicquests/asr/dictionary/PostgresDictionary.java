@@ -196,11 +196,11 @@ public class PostgresDictionary implements IPostgresDictionary {
 	}
 
 	@Override
-	public void addSynonym(long masterId, long synonymId) {
+	public boolean addSynonym(long masterId, long synonymId) {
 		String sql = "INSERT INTO public.synonyms (id, syn_id) VALUES(?, ?)";
 		environment.logDebug("AddSyn: "+masterId+" "+synonymId);
 		IResult r = null;
-		long result = -1;
+		Boolean result = true;
 	    try {
 	      r = conn.beginTransaction();
 	      Object [] obj = new Object[2];
@@ -210,9 +210,11 @@ public class PostgresDictionary implements IPostgresDictionary {
 	      
 	    } catch (Exception e) {
 	    	environment.logError(e.getMessage(), e);
+	    	result = false;
 	    } finally {
 	    	conn.endTransaction(r);
 	    }
+	    return result;
 	}
 
 	@Override
@@ -276,5 +278,7 @@ public class PostgresDictionary implements IPostgresDictionary {
 	    }
 	    return result;
 	}
+
+	
 
 }

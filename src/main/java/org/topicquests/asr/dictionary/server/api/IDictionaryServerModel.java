@@ -30,6 +30,9 @@ public interface IDictionaryServerModel {
 	public static final String
 		GET_TERM_ID		= "getTermId",
 		ADD_TERM		= "addTerm",
+		ADD_SYNONYM		= "addSyn", // long, long
+		ADD_SYNONYM_W	= "addSynW",// long, word
+		LIST_SYNONYMS	= "listSyns",
 		GET_DICTIONARY	= "getDictionary";
 
 	/**

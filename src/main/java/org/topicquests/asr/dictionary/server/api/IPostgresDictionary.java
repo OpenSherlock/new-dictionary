@@ -42,7 +42,8 @@ public interface IPostgresDictionary {
 	////////////////////
 	
 	
-	void addSynonym(long masterId, long synonymId);
+	boolean addSynonym(long masterId, long synonymId);
+	
 	
 	List<Long> listSynonymIds(long masterId);
 	

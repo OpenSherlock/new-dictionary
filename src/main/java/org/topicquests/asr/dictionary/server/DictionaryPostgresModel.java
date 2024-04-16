@@ -108,6 +108,24 @@ public class DictionaryPostgresModel implements IDictionaryServerModel {
 		return result;
 	}
 	
+	JSONObject addSynonym(long masterId, long synId) {
+		environment.logDebug("DictServerModel.addSyn- "+masterId+" "+synId);
+		JSONObject result = new JSONObject();
+		boolean t = dictionary.addSynonym(masterId, synId);
+		
+		return result;
+	}
+	
+	JSONObject addSynonymW(long masterId, String syn) {
+		environment.logDebug("DictServerModel.addSynW- "+masterId+" "+syn);
+		JSONObject result = new JSONObject();
+		boolean t = false;
+		long r = dictionary.getTermId(syn);
+		if (r > -1)
+			t = dictionary.addSynonym(masterId, r);
+		
+		return result;
+	}
 	/////////////////////////
 	// given Id, get the whole word
 	// given word, find Id with lowercase word
