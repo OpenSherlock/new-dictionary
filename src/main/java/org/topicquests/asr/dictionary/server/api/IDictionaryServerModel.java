@@ -20,6 +20,7 @@ public interface IDictionaryServerModel {
 		VERB			= "verb",
 		CLIENT_ID		= "clientId",
 		TERM			= "term",
+		TERM2			= "term2",
 		GET_TERM		= "getWord",
 		IS_NEW_TERM		= "isNewTerm",	// boolean <code>true</code> if is new word
 		TEST			= "test",
@@ -30,9 +31,9 @@ public interface IDictionaryServerModel {
 	public static final String
 		GET_TERM_ID		= "getTermId",
 		ADD_TERM		= "addTerm",
-		ADD_SYNONYM		= "addSyn", // long, long
-		ADD_SYNONYM_W	= "addSynW",// long, word
-		LIST_SYNONYMS	= "listSyns",
+		ADD_SYNONYM		= "addSyn", // string, string
+	//	ADD_SYNONYM_W	= "addSynW",// long, word
+		LIST_SYNONYMS	= "listSyns", //returns strings
 		GET_DICTIONARY	= "getDictionary";
 
 	/**
