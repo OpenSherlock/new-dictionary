@@ -13,6 +13,9 @@ import org.topicquests.asr.dictionary.server.api.IPostgresDictionary;
 import org.topicquests.os.asr.api.IStatisticsClient;
 
 import net.minidev.json.JSONObject;
+import net.minidev.json.JSONArray;
+
+import net.minidev.json.parser.JSONParser;
 
 /**
  * @author jackpark
@@ -62,6 +65,12 @@ public class DictionaryPostgresModel implements IDictionaryServerModel {
 				environment.logDebug("DictionaryServerModel.handleNewRequest-1 "+jo);
 			} else if (verb.equals(IDictionaryServerModel.GET_TERM)) {
 				x = getTermById(request);
+				if (x.startsWith(IDictionaryServerModel.ERROR))
+					jo.put(IDictionaryServerModel.ERROR, x);
+				else
+					jo.put(IDictionaryServerModel.CARGO, x);
+			} else if (verb.equals(IDictionaryServerModel.UPDATE)) {
+				x = handleUpdate(request);
 				jo.put(IDictionaryServerModel.CARGO, x);
 			} else if (verb.equals(IDictionaryServerModel.GET_DICTIONARY)) {
 				x = getDictionary();
@@ -81,6 +90,20 @@ public class DictionaryPostgresModel implements IDictionaryServerModel {
 		return result;
 	}
 	
+	String handleUpdate(JSONObject jo) {
+		String result = null;
+		String json = jo.getAsString(IDictionaryServerModel.CARGO);
+		JSONParser p = new JSONParser(JSONParser.MODE_JSON_SIMPLE);
+		JSONArray a = null;
+		try {
+			a = (JSONArray)p.parse(json);
+		} catch (Exception e) {
+			environment.logError(e.getMessage(), e);
+			return IDictionaryServerModel.ERROR+" "+e.getMessage();
+		}
+
+		return result;
+	}
 	String getDictionary() {
 		String result = null;
 		JSONObject jo = dictionary.getDictionary();
