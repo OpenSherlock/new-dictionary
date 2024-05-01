@@ -97,6 +97,7 @@ public class DictionaryPostgresModel implements IDictionaryServerModel {
 		JSONArray a = null;
 		try {
 			a = (JSONArray)p.parse(json);
+			result = dictionary.update(a);
 		} catch (Exception e) {
 			environment.logError(e.getMessage(), e);
 			return IDictionaryServerModel.ERROR+" "+e.getMessage();
