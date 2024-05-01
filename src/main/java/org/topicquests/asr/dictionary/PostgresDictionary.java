@@ -14,6 +14,7 @@ import org.topicquests.pg.api.IPostgresConnection;
 import org.topicquests.support.ResultPojo;
 import org.topicquests.support.api.IResult;
 
+import net.minidev.json.JSONArray;
 import net.minidev.json.JSONObject;
 
 /**
@@ -90,6 +91,27 @@ public class PostgresDictionary implements IPostgresDictionary {
 	    return result;
 	}	
 
+	boolean existsTerm(String word) {
+		String sql = "SELECT * public.dictionary WHERE word=?";
+		environment.logDebug("existsTerm: "+word);
+		IResult r = null;
+		boolean result = false; //default
+	    try {
+	      r = conn.beginTransaction();
+	      Object [] obj = new Object[1];
+	      obj[0] = word.toLowerCase();
+	      r = conn.executeSelect(sql, r, obj);
+	      ResultSet rs = (ResultSet)r.getResultObject();
+	      if (rs != null && rs.next())
+			result = true;
+	      
+	    } catch (Exception e) {
+	    	environment.logError(e.getMessage(), e);
+	    } finally {
+	    	conn.endTransaction(r);
+	    }
+	    return result;
+	}	
 	@Override
 	public JSONObject getDictionary() {
 		JSONObject result = new JSONObject();
@@ -277,6 +299,21 @@ public class PostgresDictionary implements IPostgresDictionary {
 	    	conn.endTransaction(r);
 	    }
 	    return result;
+	}
+
+	@Override
+	public String update(JSONArray terms) {
+		String result = "Update OK"; // default
+		boolean exists = false;
+		int len = terms.size();
+		String term;
+		for (int i=0;i<len;i++) {
+			term = terms.get(i).toString();
+			exists = existsTerm(term);
+			if (!exists)
+				addTermWord(term);
+		}
+		return result;
 	}
 
 	

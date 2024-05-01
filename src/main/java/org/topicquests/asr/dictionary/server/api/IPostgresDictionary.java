@@ -4,6 +4,7 @@
 package org.topicquests.asr.dictionary.server.api;
 import java.util.*;
 
+import net.minidev.json.JSONArray;
 import net.minidev.json.JSONObject;
 
 /**
@@ -36,6 +37,8 @@ public interface IPostgresDictionary {
 	
 	boolean isEmpty();
 	List<String> listWords(int offset, int count);
+	
+	String update(JSONArray terms);
 
 	////////////////////
 	// Synonyms
