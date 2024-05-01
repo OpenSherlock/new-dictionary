@@ -35,7 +35,9 @@ public interface IDictionaryServerModel {
 	//	ADD_SYNONYM_W	= "addSynW",// long, word
 		LIST_SYNONYMS	= "listSyns", //returns strings
 		GET_DICTIONARY	= "getDictionary",
-		UPDATE			= "update"; // accept a JSON string with terms and synonyms
+		UPDATE			= "update", // accept a JSON string with terms and synonyms
+		SYNONYMS		= "newsyns";  // part of update
+
 
 	/**
 	 * A request takes one form:<br>

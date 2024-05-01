@@ -44,6 +44,13 @@ public interface IPostgresDictionary {
 	// Synonyms
 	////////////////////
 	
+	/**
+	 * array of pairs {term, synonym}
+	 * @param pairs
+	 * @return
+	 */
+	String addSynonyms(JSONArray pairs);
+	
 	
 	boolean addSynonym(long masterId, long synonymId);
 	

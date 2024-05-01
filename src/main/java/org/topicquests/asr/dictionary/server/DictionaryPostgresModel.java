@@ -72,6 +72,9 @@ public class DictionaryPostgresModel implements IDictionaryServerModel {
 			} else if (verb.equals(IDictionaryServerModel.UPDATE)) {
 				x = handleUpdate(request);
 				jo.put(IDictionaryServerModel.CARGO, x);
+			} else if (verb.equals(IDictionaryServerModel.SYNONYMS)) {
+				x = handleSynonyms(request);
+				jo.put(IDictionaryServerModel.CARGO, x);
 			} else if (verb.equals(IDictionaryServerModel.GET_DICTIONARY)) {
 				x = getDictionary();
 				jo.put(IDictionaryServerModel.CARGO, x);
@@ -90,8 +93,23 @@ public class DictionaryPostgresModel implements IDictionaryServerModel {
 		return result;
 	}
 	
+	String handleSynonyms(JSONObject jo) {
+		String result = "OK"; //default
+		String json = jo.getAsString(IDictionaryServerModel.CARGO);
+		JSONParser p = new JSONParser(JSONParser.MODE_JSON_SIMPLE);
+		JSONArray a = null;
+		try {
+			a = (JSONArray)p.parse(json);
+			result = dictionary.addSynonyms(a);
+		} catch (Exception e) {
+			environment.logError(e.getMessage(), e);
+			return IDictionaryServerModel.ERROR+" "+e.getMessage();
+		}
+
+		return result;
+	}
 	String handleUpdate(JSONObject jo) {
-		String result = null;
+		String result = "OK";
 		String json = jo.getAsString(IDictionaryServerModel.CARGO);
 		JSONParser p = new JSONParser(JSONParser.MODE_JSON_SIMPLE);
 		JSONArray a = null;

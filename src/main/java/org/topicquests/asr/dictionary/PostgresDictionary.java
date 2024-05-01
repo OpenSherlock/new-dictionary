@@ -8,6 +8,7 @@ package org.topicquests.asr.dictionary;
 import java.sql.ResultSet;
 import java.util.*;
 
+import org.topicquests.asr.dictionary.server.api.IDictionaryServerModel;
 import org.topicquests.asr.dictionary.server.api.IPostgresDictionary;
 import org.topicquests.pg.PostgresConnectionFactory;
 import org.topicquests.pg.api.IPostgresConnection;
@@ -313,6 +314,31 @@ public class PostgresDictionary implements IPostgresDictionary {
 			if (!exists)
 				addTermWord(term);
 		}
+		return result;
+	}
+
+	@Override
+	public String addSynonyms(JSONArray pairs) {
+		String result = "Update OK"; // default
+		int len = pairs.size();
+		String term, syn;
+		long tid, sid;
+		JSONArray p;
+		boolean good = true;
+		for (int i=0;i<len;i++) {
+			p = (JSONArray)pairs.get(i);
+			term = p.get(0).toString();
+			syn = p.get(1).toString();
+			tid = this.getTermId(term);
+			sid = this.getTermId(syn);
+			if (tid < 0)
+				tid = this.addTermWord(term);
+			if (sid < 0)
+				sid = this.addTermWord(syn);
+			good &= this.addSynonym(tid, sid);
+		}
+		if (!good)
+			result = IDictionaryServerModel.ERROR;
 		return result;
 	}
 
