@@ -5,8 +5,10 @@
  */
 package org.topicquests.asr.dictionary.server;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
@@ -111,7 +113,25 @@ public class DictionaryServletHandler extends HttpServlet {
 	
 	JSONObject processRequest(HttpServletRequest request) throws ServletException {
 		JSONObject result = null;
-		String pt = getPath(request);
+		String pt;
+		try {
+			InputStream is = request.getInputStream();
+			InputStreamReader rdr = new InputStreamReader(is, "UTF-8");
+			BufferedReader br = new BufferedReader(rdr);
+			StringBuilder buf = new StringBuilder();
+			String line = null;
+			while ((line = br.readLine()) != null) {
+				buf.append(line);
+			}
+			pt = buf.toString();
+			System.out.println("BOO "+pt);
+		} catch (Exception e) {
+			environment.logError(e.getMessage(), e);
+			throw new ServletException(e);
+		}
+			
+		
+		//String pt = getPath(request);
 		environment.logDebug("PROCESSREQUEST "+pt);
 		//PROCESSREQUEST http://localhost:7878/{"verb":"getDictionary","clientId":"changeme"}
 		// edge case {"verb":"addWord","word":""","clientId":"changeme"}
@@ -139,12 +159,13 @@ public class DictionaryServletHandler extends HttpServlet {
 		
 		return result;
 	}
-	
+	//{"verb":"update","cargo":"["foo","bar","blah"]","clientId":"changeme"}
+
 	JSONObject jsonFromString(String jsonString) throws ServletException {
 		environment.logDebug("JSONFROMSTRING "+jsonString);
 		//NOTE: there are edge conditions:
 		//  jsonString == ""  can happen
-		JSONParser p = new JSONParser(JSONParser.MODE_JSON_SIMPLE);
+		JSONParser p = new JSONParser(JSONParser.DEFAULT_PERMISSIVE_MODE);
 		try {
 			return (JSONObject)p.parse(jsonString);
 		} catch (Exception e) {

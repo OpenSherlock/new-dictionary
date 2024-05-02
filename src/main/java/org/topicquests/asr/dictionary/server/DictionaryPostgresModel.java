@@ -115,6 +115,7 @@ public class DictionaryPostgresModel implements IDictionaryServerModel {
 		JSONArray a = null;
 		try {
 			a = (JSONArray)p.parse(json);
+			System.out.println("DPM "+a.toJSONString());
 			result = dictionary.update(a);
 		} catch (Exception e) {
 			environment.logError(e.getMessage(), e);
@@ -142,7 +143,7 @@ public class DictionaryPostgresModel implements IDictionaryServerModel {
 	JSONObject getTermId(JSONObject jo) {
 		String theWord = jo.getAsString(IDictionaryServerModel.TERM);
 		JSONObject result = null;
-		if (theWord.equals("\""))
+		if (theWord != null && theWord.equals("\""))
 			result = addTerm("\"");
 		else
 			result = addTerm(theWord);

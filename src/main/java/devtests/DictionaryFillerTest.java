@@ -20,24 +20,26 @@ public class DictionaryFillerTest {
 	private final String URL = "http://localhost:7878/";
 	private StringBuilder buf;
 	/**
-	 * "{\"verb\":\"addWord\", \"word\":\"foo\",\"clientId\":\"changeme\"}"
+	 * "{\"verb\":\"addTerm\", \"term\":\"foo\",\"clientId\":\"changeme\"}"
 	 */
 	public DictionaryFillerTest() {
 		client = new SimpleHttpClient();
 		buf = new StringBuilder();
 		String query, word;
 		IResult r;
+		String x;
 		long st = System.currentTimeMillis();
 		try {
-			for(int i=0;i<10;i++) {
+			for(int i=0;i<1;i++) {
 				for(int j=0;j< 10;j++) {
-					buf.append("{\"verb\":\"addWord\",\"word\":\"");
+					buf.append("{\"verb\":\"addTerm\",\"term\":\"");
 					word = "AbC"+i+"-"+j; // the word
 					buf.append(word);
 					buf.append("\",\"clientId\":\"changeme\"}");
-					query = URLEncoder.encode(buf.toString(), "UTF-8");
-					r = client.put(URL, query);
-					System.out.println(r.getErrorString()+" | "+word+" | "+r.getResultObject());
+					System.out.println("SENDING:\n"+buf.toString());
+					//query = URLEncoder.encode(buf.toString(), "UTF-8");
+					x = GetQuery.getQuery(buf.toString(), URL);
+					System.out.println("GOT "+x);
 					buf = new StringBuilder();
 				}
 			}

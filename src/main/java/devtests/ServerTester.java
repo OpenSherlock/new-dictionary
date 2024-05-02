@@ -20,7 +20,8 @@ public class ServerTester {
 		//new DictionaryFillerTest(); // pumps 1 million words into it
 		//new BigDictionaryGetTest(); // asks for a huge dictionary over http
 		//new PersistentDictionaryTest(); Deprecated
-		new PGTest();
+		//new PGTest();
+		new UpdateTest();
 	}
 
 }
